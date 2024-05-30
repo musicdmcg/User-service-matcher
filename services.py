@@ -17,7 +17,7 @@ class Service:
     def __str__(self):
         return tabulate(self.summary)
     def save(self):
-        with open(f'{self.name}.txt', 'w') as f:
+        with open(f'Services/{self.name}.txt', 'w') as f:
             f.write(tabulate(self.summary))
 
 Apple = Service('Apple', 3, 1, ['phones', 'OS', 'PCs', 'laptops'], 2348094923)

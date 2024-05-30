@@ -15,5 +15,5 @@ class User:
         self.summary = [self.name, [self.xpos, self.zpos], self.needs, self.phone_number]
 
     def save(self):
-        with open(f'{self.name}.txt', 'w') as f:
+        with open(f'Users/{self.name}.txt', 'w') as f:
             f.write(tabulate(self.summary))
