@@ -21,8 +21,9 @@ class Service:
     def save(self):
         with open(f'Services/{self.name}.txt', 'w') as f:
             f.write(tabulate(self.summary))
-        master_list.append(self.name)
+        master_list.append(self)
 
 Apple = Service('Apple', 3, 1, ['phones', 'OS', 'PCs', 'laptops'], 2348094923)
 Apple.save()
 Windows = Service('Windows', 3, 0, ['OS', 'PCs'],  2348022222)
+Windows.save()
