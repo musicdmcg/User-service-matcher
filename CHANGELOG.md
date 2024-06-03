@@ -1,11 +1,12 @@
 Changelog
-v0.2----2024-5-31
-added user class
-added distance_from_user() function
-added Windows and Apple service objects
-added Bob user object
-
+v0.2----(2024-5-31)-(2024-6-3)
+</p/>added get_service function
+</p/>added user class
+</p/>added distance_from_user() function
+</p/>added Windows, Apple, Safeway, and Costco service objects
+</p/>added Bob and Alice user objects
+</p/>
 v0.1
-added Service class __init__()
-added Service class save()
-fixed config bug in .replit file
+</p/>added Service class __init__()
+</p/>added Service class save()
+</p/>fixed config bug in .replit file
