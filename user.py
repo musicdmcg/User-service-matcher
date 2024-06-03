@@ -22,19 +22,22 @@ class User:
             f.write(tabulate(self.summary))
     def distance_from_user(self, service):
         distance = m.sqrt((self.zpos - service.zpos)**2 + (self.xpos - service.xpos)**2)
-        return distance
+        return round(distance, 6)
 
     def get_services(self):
         print_list = []
-        for need in self.needs:
-            for service in s.master_list:
-                if need in service.services:
+        for service in s.master_list:
+            for product in service.services:
+                if product in self.needs:
                     print_list.append(service)
-        print_list = [s.Apple, s.Windows]
+                    break
         print_list.sort(key = self.distance_from_user)
-        return print_list
+        for service in print_list:
+            service.summary.append([f'Distance from current location: {self.distance_from_user(service)}'])
+            print(tabulate(service.summary))
+        return None
 
-bob = User('Bob', 4, 0, ['OS'], 3065643223)
+bob = User('Bob', 4, 0, ['OS', 'phones', 'laptops'], 3065643223)
 
 
 

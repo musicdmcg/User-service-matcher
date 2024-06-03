@@ -19,3 +19,4 @@ import user as u
 
 #-Main -----------------------------------------------------------------------
 print_list  = [s.Apple, s.Windows]
+u.bob.get_services()

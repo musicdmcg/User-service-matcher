@@ -13,7 +13,7 @@ class Service:
         self.zpos = zpos
         self.services = services
         self.phone_number = phone_number
-        self.summary = [[self.name], [f'({self.xpos}, {self.zpos})'], [str(', '.join(map(str, self.services)))], [f'Phone Number: {self.phone_number}']]
+        self.summary = [[self.name], [f'Location : ({self.xpos}, {self.zpos})'], ['Services: ' + str(', '.join(map(str, self.services)))], [f'Phone Number: {self.phone_number}']]
 
     def __str__(self):
         return tabulate(self.summary)
