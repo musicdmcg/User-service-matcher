@@ -1,5 +1,6 @@
 Changelog
 v0.2----(2024-5-31)-(2024-6-3)
+</p/>added a tag system to get_service
 </p/>added get_service function
 </p/>added user class
 </p/>added distance_from_user() function
