@@ -3,7 +3,7 @@
 # Name: Drew McGregor
 # Class: CS30
 # Assignment: Capstone Coding Project
-# Version: 0.2
+# Version: 0.3
 #-----------------------------------------------------------------------------
 '''
    Here is the headers docString 

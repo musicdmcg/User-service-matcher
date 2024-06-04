@@ -1,4 +1,10 @@
 Changelog
+v0.3----(2024-6-4)
+</p/>added get_input_type()
+</p/>added get_choice()
+</p/>added offer_options()
+</p/>added get_YesNo()
+</p/>added create_user() - not functional
 v0.2----(2024-5-31)-(2024-6-3)
 </p/>added a tag system to get_service
 </p/>added get_service function
