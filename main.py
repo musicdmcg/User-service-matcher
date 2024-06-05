@@ -14,6 +14,7 @@
 import math as m
 import services as s
 import user as u
+
 #-Functions ------------------------------------------------------------------
 def get_input_type(type_, msg):
     while True:
@@ -68,20 +69,24 @@ def offer_options(original_options, msg, error_msg):
     return choice
 
 def create_user():
-   name = get_input_type(str, 'What is your name? ')
-   xpos = get_input_type(float, 'Enter your xpos: ')
-   zpos = get_input_type(float, 'Enter your zpos: ')
-   needs = get_input_type(str, "Enter what products you're looking for: ").split(', ')
-   phone_number = input('Enter your phone_number: ')
-   tags = []
-   if get_YesNo("Is there a general category of items you're looking for? (yes/no)"):
-      while True:
-         new_tag = offer_options(list(service.tags for service in s.master_list).append('cancel'), 'messgae', 'error')
-         if new_tag == 'cancel':
-            break
-         else:
-            tags.append(new_tag)
-   vars()[name] = u.User(name, xpos, zpos, needs, phone_number, tags)
+    name = get_input_type(str, 'What is your name? ')
+    xpos = get_input_type(float, 'Enter your xpos: ')
+    zpos = get_input_type(float, 'Enter your zpos: ')
+    needs = get_input_type(str, "Enter what products you're looking for: ").split(', ')
+    phone_number = input('Enter your phone_number: ')
+    tags = []
+    if get_YesNo("Is there a general category of items you're looking for? (yes/no)"):
+        while True:
+            options = s.existing_tags.copy()
+            options.append('cancel')
+            new_tag = offer_options(options, 'message', 'error')
+            del options
+            if new_tag == 'cancel':
+                break
+            else:
+                tags.append(new_tag)
+    vars()[name] = u.User(name, xpos, zpos, needs, phone_number, tags)
+    vars()[name].save()
+
 
 #-Main -----------------------------------------------------------------------
-print(list(service.tags for service in s.master_list).append('cancel'))

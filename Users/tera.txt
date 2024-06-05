@@ -1,0 +1,7 @@
+------------------------
+tera
+Location : (5.0, 12.0)
+Services: os
+Phone Number: 4952343322
+Tags: tech
+------------------------

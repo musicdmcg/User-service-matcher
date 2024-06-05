@@ -8,15 +8,7 @@ from tabulate import tabulate
 import math as m
 import services as s
 
-class User:
-    def __init__(self, name, xpos, zpos, needs, phone_number, tags):
-        self.name = name
-        self.xpos = xpos
-        self.zpos = zpos
-        self.needs = needs
-        self.phone_number = phone_number
-        self.tags = tags
-        self.summary = [self.name, [self.xpos, self.zpos], self.needs, self.phone_number]
+class User(s.Service):
 
     def save(self):
         with open(f'Users/{self.name}.txt', 'w') as f:
@@ -30,7 +22,7 @@ class User:
         tag_matching = []
         for service in s.master_list:
             for product in service.services:
-                if product in self.needs:
+                if product in self.services:
                     service_matching.append(service)
                     break
             for tag in service.tags:
