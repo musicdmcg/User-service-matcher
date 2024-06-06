@@ -52,6 +52,7 @@ def get_choice(valid_inputs, msg, error_msg):
         get_choice(valid_inputs, msg, error_msg)
     return letter
 
+
 def offer_options(original_options, msg, error_msg):
     """Assign and print numerical values to items in a list"""
     print('\n')
@@ -68,14 +69,32 @@ def offer_options(original_options, msg, error_msg):
         choice = full_options[int(choice)-1]
     return choice
 
+def create_service():
+    name = get_input_type(str, 'What is your name? ')
+    xpos = get_input_type(float, 'Enter your xpos: ')
+    zpos = get_input_type(float, 'Enter your zpos: ')
+    needs = get_input_type(str, "Enter what products you provide: \
+    ").split(', ')
+    phone_number = input('Enter your phone_number: ')
+    tags = []
+    if get_YesNo("Is there a general category of items you provide?(yes/no)"):
+        tags = get_input_type(str, "Enter what categories you provide: ").split(', ')
+    globals()[name] = u.User(name, xpos, zpos, needs, phone_number, tags)
+    for user in u.master_user_list[:-1]:
+        if globals()[name].summary == user.summary:
+            del globals()[name]
+            u.master_user_list.pop(-1)
+
 def create_user():
     name = get_input_type(str, 'What is your name? ')
     xpos = get_input_type(float, 'Enter your xpos: ')
     zpos = get_input_type(float, 'Enter your zpos: ')
-    needs = get_input_type(str, "Enter what products you're looking for: ").split(', ')
+    needs = get_input_type(str, "Enter what products you're looking for: \
+    ").split(', ')
     phone_number = input('Enter your phone_number: ')
     tags = []
-    if get_YesNo("Is there a general category of items you're looking for? (yes/no)"):
+    if get_YesNo("Is there a general category of items you're looking for? \
+                (yes/no)"):
         while True:
             options = s.existing_tags.copy()
             options.append('cancel')
@@ -85,8 +104,14 @@ def create_user():
                 break
             else:
                 tags.append(new_tag)
-    vars()[name] = u.User(name, xpos, zpos, needs, phone_number, tags)
-    vars()[name].save()
+    globals()[name] = u.User(name, xpos, zpos, needs, phone_number, tags)
+    for user in u.master_user_list[:-1]:
+        if globals()[name].summary == user.summary:
+            del globals()[name]
+            u.master_user_list.pop(-1)
 
 
 #-Main -----------------------------------------------------------------------
+print(u.master_user_list)
+create_user()
+print(u.master_user_list)
