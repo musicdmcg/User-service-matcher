@@ -27,8 +27,8 @@ class Service:
         
     def save(self):
         global existing_tags
-        with open(f'Services/{self.name}.txt', 'w') as f:
-            f.write(tabulate(self.summary))
+        with open(f'Services/{self.name}.py', 'w') as f:
+            f.write(f'import services as s \n {self.name} = s.Service({self.name}, {self.xpos}, {self.zpos}, {self.services}, {self.phone_number}, {self.tags})')
         for tag in self.tags:
             if tag not in existing_tags:
                 existing_tags.append(tag)
@@ -36,11 +36,11 @@ class Service:
 Service1 = Service('Apple', 3, 1, ['phones', 'OS', 'PCs', 'laptops'], 
                 2348094923, ['tech'])
 Service1.save()
-Service2 = Service('Windows', 3, 0, ['OS', 'PCs'],  2348022222, ['tech'])
-Service2.save()
-Service3 = Service('Safeway', 1, 1, ['groceries'], 3069999999, ['fresh food'])
-Service3.save()
-Service4 = Service('Costco', 4, 5, ['phones', 'PCs', 'laptops', 
-                                  'groceries', 'TVs'], 
-                 3061112222, ['bulk', 'tech'])
-Service4.save()
+#Service2 = Service('Windows', 3, 0, ['OS', 'PCs'],  2348022222, ['tech'])
+#Service2.save()
+#Service3 = Service('Safeway', 1, 1, ['groceries'], 3069999999, ['fresh food'])
+#Service3.save()
+#Service4 = Service('Costco', 4, 5, ['phones', 'PCs', 'laptops', 
+#                                  'groceries', 'TVs'], 
+#                 3061112222, ['bulk', 'tech'])
+#Service4.save()

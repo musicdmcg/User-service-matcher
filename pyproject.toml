@@ -9,6 +9,8 @@ packages = [{include = "repl_nix_user_service_matcher"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 tabulate = "^0.9.0"
+services = "^0.1.1"
+django-email-users = "^2.0.0"
 
 
 [build-system]

@@ -1,7 +1,0 @@
-------------------------
-Safeway
-Location : (1, 1)
-Services: groceries
-Phone Number: 3069999999
-Tags: fresh food
-------------------------

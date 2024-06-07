@@ -14,7 +14,9 @@
 import math as m
 import services as s
 import user as u
-
+import Users
+import Services
+current_user = None
 #-Functions ------------------------------------------------------------------
 def get_input_type(type_, msg):
     while True:
@@ -23,6 +25,7 @@ def get_input_type(type_, msg):
             type_(user_input)
             return type_(user_input)
         except:
+            print(f'Please input a {type_}')
             return get_input_type(type_, msg)
 
 
@@ -36,6 +39,7 @@ def get_YesNo(msg):
     elif answer == 'no' or answer == 'n':
         return False
     else:
+        print("Please input either 'yes' or 'no'")
         get_YesNo(msg)
 
 
@@ -73,17 +77,19 @@ def create_service():
     name = get_input_type(str, 'What is your name? ')
     xpos = get_input_type(float, 'Enter your xpos: ')
     zpos = get_input_type(float, 'Enter your zpos: ')
-    needs = get_input_type(str, "Enter what products you provide: \
-    ").split(', ')
+    needs = get_input_type(str, "Enter what products you provide: ").split(', ')
     phone_number = input('Enter your phone_number: ')
     tags = []
     if get_YesNo("Is there a general category of items you provide?(yes/no)"):
         tags = get_input_type(str, "Enter what categories you provide: ").split(', ')
-    globals()[name] = u.User(name, xpos, zpos, needs, phone_number, tags)
-    for user in u.master_user_list[:-1]:
-        if globals()[name].summary == user.summary:
+    globals()[name] = s.Service(name, xpos, zpos, needs, phone_number, tags)
+    for service in s.master_service_list[:-1]:
+        if globals()[name].summary == service.summary:
             del globals()[name]
-            u.master_user_list.pop(-1)
+            s.master_service_list.pop(-1)
+            print("It appears you're already in the system.")
+            break
+    print(globals()[name])
 
 def create_user():
     name = get_input_type(str, 'What is your name? ')
@@ -110,8 +116,34 @@ def create_user():
             del globals()[name]
             u.master_user_list.pop(-1)
 
-
+def change_current_user(name):
+    global current_user
+    for user in u.master_user_list:
+        if user.name == name.lower():
+            current_user = user
+            print(current_user)
+            return None
+    print("That user doesn't seem to exist.")
 #-Main -----------------------------------------------------------------------
 print(u.master_user_list)
-create_user()
-print(u.master_user_list)
+print(s.master_service_list)
+while True:
+    user_options = ['Change current user', 'Get relevant services',
+                    'create user', 'create service']
+    choice = offer_options(user_options, 
+                 'What would you like to do?', 
+                 "That's not an option, please try again")
+    if choice == user_options[0]:
+        new_user_name = get_input_type(str, 'Enter your name: ')
+        change_current_user(new_user_name)
+    elif choice == user_options[1]:
+        if current_user == None:
+            print('User not selected')
+            new_user_name = get_input_type(str, 'Enter your name: ')
+            change_current_user(new_user_name)
+        else:
+            current_user.get_services()
+    elif choice == user_options[2]:
+        create_user()
+    elif choice == user_options[3]:
+        create_service()

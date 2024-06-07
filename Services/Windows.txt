@@ -1,7 +1,0 @@
-------------------------
-Windows
-Location : (3, 0)
-Services: OS, PCs
-Phone Number: 2348022222
-Tags: tech
-------------------------

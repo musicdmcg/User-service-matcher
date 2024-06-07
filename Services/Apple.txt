@@ -1,7 +1,0 @@
-----------------------------------
-Apple
-Location : (3, 1)
-Services: phones, OS, PCs, laptops
-Phone Number: 2348094923
-Tags: tech
-----------------------------------

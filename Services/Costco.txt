@@ -1,7 +1,0 @@
-----------------------------------------------
-Costco
-Location : (4, 5)
-Services: phones, PCs, laptops, groceries, TVs
-Phone Number: 3061112222
-Tags: bulk, tech
-----------------------------------------------

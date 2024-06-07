@@ -11,7 +11,7 @@ import services as s
 master_user_list = []
 class User(s.Service):
     def __init__(self, name, xpos, zpos, services, phone_number, tags):
-        self.name = name
+        self.name = name.lower()
         self.xpos = xpos
         self.zpos = zpos
         self.services = services
@@ -25,8 +25,8 @@ class User(s.Service):
         master_user_list.append(self)
 
     def save(self):
-        with open(f'Users/{self.name}.txt', 'w') as f:
-            f.write(tabulate(self.summary))
+        with open(f'Users/{self.name}.py', 'w') as f:
+            f.write(f'import user as u \n {self.name} = u.User({self.name}, {self.xpos}, {self.zpos}, {self.services}, {self.phone_number}, {self.tags})')
     
     def distance_from_user(self, service):
         distance = m.sqrt((self.zpos - service.zpos)**2 
@@ -57,8 +57,5 @@ class User(s.Service):
             {self.distance_from_user(service)}'])
             print(tabulate(service.summary))
         return None
-
-user1 = User('Bob', 4.0, 0.0, ['phones', 'laptops'], 3065643223, 'tech')
-user2 = User('Alice', -1, 0, ['TVs', 'groceries'], 3067771818, 'bulk')
 
 
