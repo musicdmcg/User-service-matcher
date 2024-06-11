@@ -11,11 +11,12 @@
 '''
 #-----------------------------------------------------------------------------
 #-Imports and Global Variables------------------------------------------------
+import glob
+import sys
+sys.path.extend(['Services', 'Users'])
 import math as m
 import services as s
 import user as u
-import Users
-import Services
 current_user = None
 #-Functions ------------------------------------------------------------------
 def get_input_type(type_, msg):
@@ -50,11 +51,11 @@ def get_choice(valid_inputs, msg, error_msg):
     msg = message given to user on run
     error_msg = msg on bad input
     '''
-    letter = input(msg).lower()
-    if letter not in valid_inputs:
+    choice = input(msg).lower()
+    if choice not in valid_inputs:
         print(error_msg)
-        get_choice(valid_inputs, msg, error_msg)
-    return letter
+        choice = get_choice(valid_inputs, msg, error_msg)
+    return choice
 
 
 def offer_options(original_options, msg, error_msg):
@@ -89,6 +90,7 @@ def create_service():
             s.master_service_list.pop(-1)
             print("It appears you're already in the system.")
             break
+    globals()[name].save()
     print(globals()[name])
 
 def create_user():
@@ -115,6 +117,8 @@ def create_user():
         if globals()[name].summary == user.summary:
             del globals()[name]
             u.master_user_list.pop(-1)
+    globals()[name].save()
+    print(globals()[name])
 
 def change_current_user(name):
     global current_user

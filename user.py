@@ -26,7 +26,9 @@ class User(s.Service):
 
     def save(self):
         with open(f'Users/{self.name}.py', 'w') as f:
-            f.write(f'import user as u \n {self.name} = u.User({self.name}, {self.xpos}, {self.zpos}, {self.services}, {self.phone_number}, {self.tags})')
+            f.write(f'import user as u \n{self.name} = '
+            + f'u.User("""{self.name}""", {self.xpos}, {self.zpos}, '
+            + f'{self.services}, {self.phone_number}, {self.tags})')
     
     def distance_from_user(self, service):
         distance = m.sqrt((self.zpos - service.zpos)**2 
@@ -45,6 +47,9 @@ class User(s.Service):
                 if tag in self.tags and service not in service_matching:
                     tag_matching.append(service)
                     break
+        if len(service_matching) and len(tag_matching) == 0:
+            print('No services matched your request')
+            return None
         service_matching.sort(key = self.distance_from_user)
         for service in service_matching:
             service.summary.append([f'Distance from current location: \
@@ -57,5 +62,3 @@ class User(s.Service):
             {self.distance_from_user(service)}'])
             print(tabulate(service.summary))
         return None
-
-
