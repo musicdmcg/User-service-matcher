@@ -3,7 +3,7 @@
 # Name: Drew McGregor
 # Class: CS30
 # Assignment: Capstone Coding Project
-# Version: 0.3
+# Version: 0.
 #-----------------------------------------------------------------------------
 '''
    Here is the headers docString 
@@ -11,12 +11,11 @@
 '''
 #-----------------------------------------------------------------------------
 #-Imports and Global Variables------------------------------------------------
-import glob
-import sys
-sys.path.extend(['Services', 'Users'])
 import math as m
 import services as s
 import user as u
+import service_objects
+import user_objects
 current_user = None
 #-Functions ------------------------------------------------------------------
 def get_input_type(type_, msg):

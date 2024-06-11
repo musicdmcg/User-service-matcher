@@ -25,8 +25,8 @@ class User(s.Service):
         master_user_list.append(self)
 
     def save(self):
-        with open(f'Users/{self.name}.py', 'w') as f:
-            f.write(f'import user as u \n{self.name} = '
+        with open('user_objects.py', 'a') as f:
+            f.write(f'\n{self.name} = '
             + f'u.User("""{self.name}""", {self.xpos}, {self.zpos}, '
             + f'{self.services}, {self.phone_number}, {self.tags})')
     

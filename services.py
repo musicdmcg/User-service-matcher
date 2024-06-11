@@ -27,15 +27,11 @@ class Service:
         
     def save(self):
         global existing_tags
-        with open(f'Services/{self.name}.py', 'w') as f:
-            f.write(f'import services as s \n{self.name} = '
+        with open('service_objects.py', 'a') as f:
+            f.write(f'\n{self.name} = '
                     + f's.Service("""{self.name}""", {self.xpos}, '
                     + f'{self.zpos}, {self.services}, {self.phone_number}, '
                     + f'{self.tags})')
         for tag in self.tags:
             if tag not in existing_tags:
                 existing_tags.append(tag)
-
-Service1 = Service('Apple', 3, 1, ['phones', 'OS', 'PCs', 'laptops'], 
-                2348094923, ['tech'])
-Service1.save()
