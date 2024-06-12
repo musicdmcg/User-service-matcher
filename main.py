@@ -3,7 +3,7 @@
 # Name: Drew McGregor
 # Class: CS30
 # Assignment: Capstone Coding Project
-# Version: 0.
+# Version: 0.4
 #-----------------------------------------------------------------------------
 '''
    Here is the headers docString 
@@ -77,11 +77,11 @@ def create_service():
     name = get_input_type(str, 'What is your name? ')
     xpos = get_input_type(float, 'Enter your xpos: ')
     zpos = get_input_type(float, 'Enter your zpos: ')
-    needs = get_input_type(str, "Enter what products you provide: ").split(', ')
+    needs = get_input_type(str, "Enter what products you provide(product1, product2, etc): ").split(', ')
     phone_number = input('Enter your phone_number: ')
     tags = []
-    if get_YesNo("Is there a general category of items you provide?(yes/no)"):
-        tags = get_input_type(str, "Enter what categories you provide: ").split(', ')
+    if get_YesNo("Is there a general category of items you provide?(yes/no) "):
+        tags = get_input_type(str, "Enter what categories you provide(category1, category2, etc): ").split(', ')
     globals()[name] = s.Service(name, xpos, zpos, needs, phone_number, tags)
     for service in s.master_service_list[:-1]:
         if globals()[name].summary == service.summary:
@@ -105,7 +105,7 @@ def create_user():
         while True:
             options = s.existing_tags.copy()
             options.append('cancel')
-            new_tag = offer_options(options, 'message', 'error')
+            new_tag = offer_options(options, "Choose a tag from the options or choose cancel after you've selected all relevant tags. ", 'error')
             del options
             if new_tag == 'cancel':
                 break
@@ -128,14 +128,14 @@ def change_current_user(name):
             return None
     print("That user doesn't seem to exist.")
 #-Main -----------------------------------------------------------------------
-print(u.master_user_list)
-print(s.master_service_list)
+#print(u.master_user_list)
+#print(s.master_service_list)
 while True:
     user_options = ['Change current user', 'Get relevant services',
                     'create user', 'create service']
     choice = offer_options(user_options, 
-                 'What would you like to do?', 
-                 "That's not an option, please try again")
+                 'What would you like to do? ', 
+                 "That's not an option, please try again.")
     if choice == user_options[0]:
         new_user_name = get_input_type(str, 'Enter your name: ')
         change_current_user(new_user_name)

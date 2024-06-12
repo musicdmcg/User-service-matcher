@@ -19,14 +19,16 @@ class User(s.Service):
         self.tags = tags
         self.summary = [[self.name], 
                     [f'Location : ({self.xpos}, {self.zpos})'], 
-                    ['Services: ' + str(', '.join(map(str, self.services)))], 
+                    ['Needs: ' + str(', '.join(map(str, self.services)))], 
                     [f'Phone Number: {self.phone_number}'], 
                     ['Tags: ' + str(', '.join(map(str, self.tags)))]]
         master_user_list.append(self)
 
     def save(self):
+        var_name = self.name.replace("'", '')
+        var_name.replace('"', '')
         with open('user_objects.py', 'a') as f:
-            f.write(f'\n{self.name} = '
+            f.write(f'\n{var_name} = '
             + f'u.User("""{self.name}""", {self.xpos}, {self.zpos}, '
             + f'{self.services}, {self.phone_number}, {self.tags})')
     
@@ -50,6 +52,7 @@ class User(s.Service):
         if len(service_matching) and len(tag_matching) == 0:
             print('No services matched your request')
             return None
+        print('\nMatched Needs')
         service_matching.sort(key = self.distance_from_user)
         for service in service_matching:
             service.summary.append([f'Distance from current location: \
