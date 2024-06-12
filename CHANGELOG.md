@@ -1,6 +1,7 @@
 Changelog
 v0.3----(2024-6-4)-(2024-6-10)
-</p/>changed Service.save() and User.save() to write oython files for object creation.
+</p/>changed Service.save() and User.save() to write python files for object creation.
+</p/>added menu loop to main
 </p/>changed User to child of Service
 </p/>added create_service()
 </p/>added get_input_type()
