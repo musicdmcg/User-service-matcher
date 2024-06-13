@@ -31,7 +31,7 @@ class User(s.Service):
             f.write(f'\n{var_name} = '
             + f'u.User("""{self.name}""", {self.xpos}, {self.zpos}, '
             + f'{self.services}, {self.phone_number}, {self.tags})')
-    
+
     def distance_from_user(self, service):
         distance = m.sqrt((self.zpos - service.zpos)**2 
                         + (self.xpos - service.xpos)**2)
@@ -45,23 +45,27 @@ class User(s.Service):
                 if product in self.services:
                     service_matching.append(service)
                     break
-            for tag in service.tags:
-                if tag in self.tags and service not in service_matching:
-                    tag_matching.append(service)
-                    break
-        if len(service_matching) and len(tag_matching) == 0:
+        for tag in service.tags:
+            if tag in self.tags and service not in service_matching:
+                tag_matching.append(service)
+                break
+        if len(service_matching) == 0 and len(tag_matching) == 0:
             print('No services matched your request')
             return None
-        print('\nMatched Needs')
-        service_matching.sort(key = self.distance_from_user)
-        for service in service_matching:
-            service.summary.append([f'Distance from current location: \
-            {self.distance_from_user(service)}'])
-            print(tabulate(service.summary))
-        print('Matched tags')
-        tag_matching.sort(key = self.distance_from_user)
-        for service in tag_matching:
-            service.summary.append([f'Distance from current location: \
-            {self.distance_from_user(service)}'])
-            print(tabulate(service.summary))
-        return None
+        if len(service_matching) == 0:
+            print('No services matched your needs')
+        else:
+            print('\nMatched Needs')
+            service_matching.sort(key = self.distance_from_user)
+            for service in service_matching:
+                service.summary.append([f'Distance from current location: {self.distance_from_user(service)}'])
+                print(tabulate(service.summary))
+        if len(tag_matching) == 0:
+            print('No services matched your tags')
+        else:
+            print('Matched tags')
+            tag_matching.sort(key = self.distance_from_user)
+            for service in tag_matching:
+                service.summary.append([f'Distance from current location: {self.distance_from_user(service)}'])
+                print(tabulate(service.summary))
+            return None

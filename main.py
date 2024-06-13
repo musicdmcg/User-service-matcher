@@ -11,6 +11,7 @@
 '''
 #-----------------------------------------------------------------------------
 #-Imports and Global Variables------------------------------------------------
+from tabulate import tabulate
 import math as m
 import services as s
 import user as u
@@ -25,7 +26,7 @@ def get_input_type(type_, msg):
             type_(user_input)
             return type_(user_input)
         except:
-            print(f'Please input a {type_}')
+            print(f'Please input a {type_}') #make typee print properly
             return get_input_type(type_, msg)
 
 
@@ -82,22 +83,32 @@ def create_service():
     tags = []
     if get_YesNo("Is there a general category of items you provide?(yes/no) "):
         tags = get_input_type(str, "Enter what categories you provide(category1, category2, etc): ").split(', ')
+    
+    print(tabulate([[name], 
+            [f'Location : ({xpos}, {zpos})'], 
+            ['Services: ' + str(', '.join(map(str, needs)))], 
+            [f'Phone Number: {phone_number}'], 
+            ['Tags: ' + str(', '.join(map(str, tags)))]]))
+    if not get_YesNo('is this the correct information? (Yes/No)'):
+        create_service()
     globals()[name] = s.Service(name, xpos, zpos, needs, phone_number, tags)
+    # Remove newly created object if it's already in master_list
     for service in s.master_service_list[:-1]:
         if globals()[name].summary == service.summary:
             del globals()[name]
             s.master_service_list.pop(-1)
-            print("It appears you're already in the system.")
             break
-    globals()[name].save()
-    print(globals()[name])
+    try:
+        globals()[name].save()
+        print(globals()[name])
+    except KeyError:
+        print("\nIt appears you're already in the system.")
 
 def create_user():
     name = get_input_type(str, 'What is your name? ')
     xpos = get_input_type(float, 'Enter your xpos: ')
     zpos = get_input_type(float, 'Enter your zpos: ')
-    needs = get_input_type(str, "Enter what products you're looking for: \
-    ").split(', ')
+    needs = get_input_type(str, "Enter what products you're looking for: ").split(', ')
     phone_number = input('Enter your phone_number: ')
     tags = []
     if get_YesNo("Is there a general category of items you're looking for? \
@@ -111,14 +122,26 @@ def create_user():
                 break
             else:
                 tags.append(new_tag)
+    
+    print(tabulate([[name], 
+        [f'Location : ({xpos}, {zpos})'], 
+        ['Needs: ' + str(', '.join(map(str, needs)))], 
+        [f'Phone Number: {phone_number}'], 
+        ['Tags: ' + str(', '.join(map(str, tags)))]]))
+    if not get_YesNo('is this the correct information? (Yes/No)'):
+        create_user()
     globals()[name] = u.User(name, xpos, zpos, needs, phone_number, tags)
+    # Remove newly created object if it's already in master_list
     for user in u.master_user_list[:-1]:
         if globals()[name].summary == user.summary:
             del globals()[name]
             u.master_user_list.pop(-1)
-    globals()[name].save()
-    print(globals()[name])
-
+            print("it appears you're already in the system")
+            break
+        else:
+            globals()[name].save()
+            print(globals()[name])
+            
 def change_current_user(name):
     global current_user
     for user in u.master_user_list:
@@ -140,12 +163,11 @@ while True:
         new_user_name = get_input_type(str, 'Enter your name: ')
         change_current_user(new_user_name)
     elif choice == user_options[1]:
-        if current_user == None:
+        while current_user == None:
             print('User not selected')
             new_user_name = get_input_type(str, 'Enter your name: ')
             change_current_user(new_user_name)
-        else:
-            current_user.get_services()
+        current_user.get_services()
     elif choice == user_options[2]:
         create_user()
     elif choice == user_options[3]:

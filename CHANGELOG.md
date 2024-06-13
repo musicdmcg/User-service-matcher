@@ -1,5 +1,9 @@
 Changelog
-v0.4----(2024-6-11)-(2024-6-11)
+v0.4----(2024-6-11)-(2024-6-13)
+</p/>added verification in create_service() and create_user()
+</p/>fixed crash when already existing service created
+</p/>fixed service_matching failing to print 
+</p/>added more print staments in .get_services() for clarity
 </p/>fixed error when quotes used in service/user names
 </p/>added saving across sessions by changing .save() to write to a single file instead creating a new one for each.    
 v0.3----(2024-6-4)-(2024-6-10)

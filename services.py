@@ -24,7 +24,7 @@ class Service:
 
     def __str__(self):
         return tabulate(self.summary)
-        
+
     def save(self):
         global existing_tags
         var_name = self.name.replace("'", '')
@@ -34,6 +34,6 @@ class Service:
                     + f's.Service("""{self.name}""", {self.xpos}, '
                     + f'{self.zpos}, {self.services}, {self.phone_number}, '
                     + f'{self.tags})')
-        for tag in self.tags:
+        for tag in self.tags: #check functionality
             if tag not in existing_tags:
                 existing_tags.append(tag)
