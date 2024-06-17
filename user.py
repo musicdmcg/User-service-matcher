@@ -47,9 +47,10 @@ class User(s.Service):
                     service_matching.append(service)
                     break
         for service in s.master_service_list:
-            if service.tag in self.tags and service not in service_matching:
-                tag_matching.append(service)
-                break
+            for tag in service.tags:
+                if tag in self.tags and service not in service_matching:
+                    tag_matching.append(service)
+                    break
         if len(service_matching) == 0 and len(tag_matching) == 0:
             print('No services matched your request')
             return None
