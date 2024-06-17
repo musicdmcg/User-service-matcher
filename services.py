@@ -21,12 +21,14 @@ class Service:
                     [f'Phone Number: {self.phone_number}'], 
                     ['Tags: ' + str(', '.join(map(str, self.tags)))]]
         master_service_list.append(self)
+        for tag in self.tags:
+            if tag not in existing_tags:
+                existing_tags.append(tag)
 
     def __str__(self):
         return tabulate(self.summary)
 
     def save(self):
-        global existing_tags
         var_name = self.name.replace("'", '')
         var_name = var_name.replace('"', '')
         var_name = var_name.replace(' ', '_')
@@ -35,6 +37,3 @@ class Service:
                     + f's.Service("""{self.name}""", {self.xpos}, '
                     + f'{self.zpos}, {self.services}, {self.phone_number}, '
                     + f'{self.tags})')
-        for tag in self.tags: #check functionality
-            if tag not in existing_tags:
-                existing_tags.append(tag)

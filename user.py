@@ -11,7 +11,7 @@ import services as s
 master_user_list = []
 class User(s.Service):
     def __init__(self, name, xpos, zpos, services, phone_number, tags):
-        self.name = name.lower()
+        self.name = name
         self.xpos = xpos
         self.zpos = zpos
         self.services = services

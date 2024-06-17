@@ -134,15 +134,15 @@ def create_user():
     phone_number = get_input_type(int, 'Enter your phone_number (no digit separators, such as "-" or "."): ')
     tags = []
     if get_YesNo("Is there a general category of items you're looking for? (yes/no)"):
+        options = s.existing_tags.copy()
+        options.append('Exit Menu')
         while True:
-            options = s.existing_tags.copy()
-            options.append('cancel')
             new_tag = offer_options(options, "Choose a tag from the options or choose cancel after you've selected all relevant tags. ", 'error')
-            del options
-            if new_tag == 'cancel':
+            if new_tag == 'Exit Menu':
                 break
             else:
                 tags.append(new_tag)
+                options.remove(new_tag)
     # Verification of submitted info.
     print(tabulate([[name], 
         [f'Location : ({xpos}, {zpos})'], 
@@ -171,7 +171,7 @@ def change_current_user(name):
     '''Changes current_user to name if name is in the system'''
     global current_user
     for user in u.master_user_list:
-        if user.name == name.lower():
+        if user.name.lower() == name.lower():
             current_user = user
             print(current_user)
             return None
@@ -179,6 +179,7 @@ def change_current_user(name):
 #-Main -----------------------------------------------------------------------
 #print(u.master_user_list)
 #print(s.master_service_list)
+print(s.existing_tags)
 while True:
     user_options = ['Change current user', 'Get relevant services',
                     'Create a user', 'Create a service']

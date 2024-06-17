@@ -3,3 +3,4 @@
 import user as u 
 bob = u.User("""bob""", 1.0, 1.0, ['food'], 5556667777, ['tech'])
 alice = u.User("""alice""", 2.0, 9.0, ['phones'], 7890345623, [])
+jill = u.User("""Jill""", 3.0, 5.0, ['deer'], 3456765432, ['bulk', 'baking'])
