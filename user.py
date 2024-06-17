@@ -26,7 +26,8 @@ class User(s.Service):
 
     def save(self):
         var_name = self.name.replace("'", '')
-        var_name.replace('"', '')
+        var_name = var_name.replace('"', '')
+        var_name = var_name.replace(' ', '_')
         with open('user_objects.py', 'a') as f:
             f.write(f'\n{var_name} = '
             + f'u.User("""{self.name}""", {self.xpos}, {self.zpos}, '
@@ -45,8 +46,8 @@ class User(s.Service):
                 if product in self.services:
                     service_matching.append(service)
                     break
-        for tag in service.tags:
-            if tag in self.tags and service not in service_matching:
+        for service in s.master_service_list:
+            if service.tag in self.tags and service not in service_matching:
                 tag_matching.append(service)
                 break
         if len(service_matching) == 0 and len(tag_matching) == 0:

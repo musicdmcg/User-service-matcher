@@ -1,5 +1,7 @@
 Changelog
-v0.4----(2024-6-11)-(2024-6-13)
+v0.4----(2024-6-11)-(2024-6-17)
+</p/>fixed tag matching to work
+</p/>fixed input related errors when spaces, ', or " used
 </p/>added verification in create_service() and create_user()
 </p/>fixed crash when already existing service created
 </p/>fixed service_matching failing to print 

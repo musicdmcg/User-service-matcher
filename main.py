@@ -18,15 +18,21 @@ import user as u
 import service_objects
 import user_objects
 current_user = None
+start_msg = ('This will match a user to services that fit their preferences ' 
++ 'and location. All users and services are saved across sessions.')
 #-Functions ------------------------------------------------------------------
 def get_input_type(type_, msg):
+    '''Gets an input a verifies that it can be converted to type_
+    returns type_(input)
+    msg = message printed to user
+    '''
     while True:
         user_input = input(msg)
         try:
             type_(user_input)
             return type_(user_input)
         except:
-            print(f'Please input a {type_}') #make typee print properly
+            print(f'Please input a {str(type_)[8:-2]}')
             return get_input_type(type_, msg)
 
 
@@ -74,25 +80,35 @@ def offer_options(original_options, msg, error_msg):
         choice = full_options[int(choice)-1]
     return choice
 
+
 def create_service():
+    '''Gets required info to create a service from the user, then
+    creates the service if not already in the system.
+    '''
     name = get_input_type(str, 'What is your name? ')
-    xpos = get_input_type(float, 'Enter your xpos: ')
-    zpos = get_input_type(float, 'Enter your zpos: ')
-    needs = get_input_type(str, "Enter what products you provide(product1, product2, etc): ").split(', ')
-    phone_number = input('Enter your phone_number: ')
+    xpos = get_input_type(float, 'Enter your x coordinate: ')
+    zpos = get_input_type(float, 'Enter your z coordinate: ')
+    products = get_input_type(str, "Enter what products you provide(product1, product2, etc): ").replace('"', '')
+    products = products.replace("'", '')
+    products = products.split(', ')
+    phone_number = get_input_type(int, 'Enter your phone_number (no digit separators, such as "-" or "."): ')
     tags = []
     if get_YesNo("Is there a general category of items you provide?(yes/no) "):
-        tags = get_input_type(str, "Enter what categories you provide(category1, category2, etc): ").split(', ')
-    
+        tags = get_input_type(str, "Enter what categories you provide(category1, category2, etc): ").replace('"', '')
+        tags = tags.replace("'", '')
+        tags = tags.split(', ')
+    # Verification that submitted info is correct.
     print(tabulate([[name], 
             [f'Location : ({xpos}, {zpos})'], 
-            ['Services: ' + str(', '.join(map(str, needs)))], 
+            ['Services: ' + str(', '.join(map(str, products)))], 
             [f'Phone Number: {phone_number}'], 
             ['Tags: ' + str(', '.join(map(str, tags)))]]))
     if not get_YesNo('is this the correct information? (Yes/No)'):
-        create_service()
-    globals()[name] = s.Service(name, xpos, zpos, needs, phone_number, tags)
-    # Remove newly created object if it's already in master_list
+        if get_YesNo('do you still want to create a service?'):
+            create_service()
+        return None
+    globals()[name] = s.Service(name, xpos, zpos, products, phone_number, tags)
+    # Remove newly created object if it's already in master_list.
     for service in s.master_service_list[:-1]:
         if globals()[name].summary == service.summary:
             del globals()[name]
@@ -104,15 +120,20 @@ def create_service():
     except KeyError:
         print("\nIt appears you're already in the system.")
 
+
 def create_user():
+    '''Gets required info to create a user from the user, then
+    creates the user if not already in the system.
+    '''
     name = get_input_type(str, 'What is your name? ')
-    xpos = get_input_type(float, 'Enter your xpos: ')
-    zpos = get_input_type(float, 'Enter your zpos: ')
-    needs = get_input_type(str, "Enter what products you're looking for: ").split(', ')
-    phone_number = input('Enter your phone_number: ')
+    xpos = get_input_type(float, 'Enter your x coordinate: ')
+    zpos = get_input_type(float, 'Enter your z coordinate: ')
+    needs = get_input_type(str, "Enter what products you're looking for: ").replace('"', '')
+    needs = needs.replace("'", '')
+    needs = needs.split(', ')
+    phone_number = get_input_type(int, 'Enter your phone_number (no digit separators, such as "-" or "."): ')
     tags = []
-    if get_YesNo("Is there a general category of items you're looking for? \
-                (yes/no)"):
+    if get_YesNo("Is there a general category of items you're looking for? (yes/no)"):
         while True:
             options = s.existing_tags.copy()
             options.append('cancel')
@@ -122,27 +143,32 @@ def create_user():
                 break
             else:
                 tags.append(new_tag)
-    
+    # Verification of submitted info.
     print(tabulate([[name], 
         [f'Location : ({xpos}, {zpos})'], 
         ['Needs: ' + str(', '.join(map(str, needs)))], 
         [f'Phone Number: {phone_number}'], 
         ['Tags: ' + str(', '.join(map(str, tags)))]]))
     if not get_YesNo('is this the correct information? (Yes/No)'):
-        create_user()
+        if get_YesNo('do you still want to create a new user?'):
+            create_user()
+        return None
     globals()[name] = u.User(name, xpos, zpos, needs, phone_number, tags)
     # Remove newly created object if it's already in master_list
     for user in u.master_user_list[:-1]:
         if globals()[name].summary == user.summary:
             del globals()[name]
             u.master_user_list.pop(-1)
-            print("it appears you're already in the system")
             break
-        else:
-            globals()[name].save()
-            print(globals()[name])
-            
+    try:
+        globals()[name].save()
+        print(globals()[name])
+    except KeyError:
+        print("\nIt appears you're already in the system.")
+
+
 def change_current_user(name):
+    '''Changes current_user to name if name is in the system'''
     global current_user
     for user in u.master_user_list:
         if user.name == name.lower():
@@ -155,7 +181,7 @@ def change_current_user(name):
 #print(s.master_service_list)
 while True:
     user_options = ['Change current user', 'Get relevant services',
-                    'create user', 'create service']
+                    'Create a user', 'Create a service']
     choice = offer_options(user_options, 
                  'What would you like to do? ', 
                  "That's not an option, please try again.")
@@ -172,3 +198,4 @@ while True:
         create_user()
     elif choice == user_options[3]:
         create_service()
+

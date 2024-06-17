@@ -28,7 +28,8 @@ class Service:
     def save(self):
         global existing_tags
         var_name = self.name.replace("'", '')
-        var_name.replace('"', '')
+        var_name = var_name.replace('"', '')
+        var_name = var_name.replace(' ', '_')
         with open('service_objects.py', 'a') as f:
             f.write(f'\n{var_name} = '
                     + f's.Service("""{self.name}""", {self.xpos}, '
