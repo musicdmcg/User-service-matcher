@@ -5,6 +5,7 @@
 #-----------------------------------------------------------------------------
 #-Imports and Global Variables------------------------------------------------
 from tabulate import tabulate
+import re as r
 master_service_list = []
 existing_tags = []
 class Service:
@@ -29,10 +30,13 @@ class Service:
         return tabulate(self.summary)
 
     def save(self):
+        '''Saves self to service_objects.py as a Service object'''
         var_name = self.name.replace("'", '')
         var_name = var_name.replace('"', '')
         var_name = var_name.replace(' ', '_')
+        var_name = var_name.replace('.', '_dot_')
         var_name = var_name.replace('&', 'and')
+        var_name = r.sub('\d', ' number ', var_name)
         with open('service_objects.py', 'a') as f:
             f.write(f'\n{var_name} = '
                     + f's.Service("""{self.name}""", {self.xpos}, '

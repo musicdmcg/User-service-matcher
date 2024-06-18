@@ -25,21 +25,26 @@ class User(s.Service):
         master_user_list.append(self)
 
     def save(self):
-        var_name = self.name.replace("'", '')
-        var_name = var_name.replace('"', '')
+        '''Saves a user to user_objects.py as a user object'''
+        var_name = self.name.replace("'", ' apostrophe ')
+        var_name = var_name.replace('"', ' quotation mark ')
         var_name = var_name.replace(' ', '_')
         var_name = var_name.replace('&', 'and')
+        var_name = s.r.sub('\d', '', var_name)
         with open('user_objects.py', 'a') as f:
             f.write(f'\n{var_name} = '
             + f'u.User("""{self.name}""", {self.xpos}, {self.zpos}, '
             + f'{self.services}, {self.phone_number}, {self.tags})')
 
     def distance_from_user(self, service):
+        '''Returns distance between user (self) and service. '''
         distance = m.sqrt((self.zpos - service.zpos)**2 
                         + (self.xpos - service.xpos)**2)
         return round(distance, 6)
 
     def get_services(self):
+        '''Searches s.master_service_list for services that match 
+        needs or tags, then prints them'''
         service_matching = []
         tag_matching = []
         for service in s.master_service_list:

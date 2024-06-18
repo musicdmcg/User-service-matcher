@@ -1,7 +1,8 @@
 Changelog
 v0.4----(2024-6-11)-(2024-6-17)
-</p/>corrected all line length issues
-</p/>fixed save issue with '&' symbol
+</p/>fixed numbers being entered input bug in save()
+</p/>fixed all line length issues
+</p/>fixed save issue with '&' and '.' symbol
 </p/>fixed duplicate user/service creation overwriting
 </p/>fixed get_YesNo() return none on a misinput
 </p/>fixed change_user() to account for case sensitivity
