@@ -36,7 +36,7 @@ class Service:
         var_name = var_name.replace(' ', '_')
         var_name = var_name.replace('.', '_dot_')
         var_name = var_name.replace('&', 'and')
-        var_name = r.sub('\d', ' number ', var_name)
+        var_name = r.sub('\d', '_number_', var_name)
         with open('service_objects.py', 'a') as f:
             f.write(f'\n{var_name} = '
                     + f's.Service("""{self.name}""", {self.xpos}, '

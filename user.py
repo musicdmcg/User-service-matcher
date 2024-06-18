@@ -30,7 +30,7 @@ class User(s.Service):
         var_name = var_name.replace('"', ' quotation mark ')
         var_name = var_name.replace(' ', '_')
         var_name = var_name.replace('&', 'and')
-        var_name = s.r.sub('\d', '', var_name)
+        var_name = s.r.sub('\d', '_number_', var_name)
         with open('user_objects.py', 'a') as f:
             f.write(f'\n{var_name} = '
             + f'u.User("""{self.name}""", {self.xpos}, {self.zpos}, '

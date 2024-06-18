@@ -1,5 +1,6 @@
 Changelog
 v1----(2024-6-18)
+</p/>fixed issue when numbers inputted as names in save()
 </p/>added quit option to main 
 v0.4----(2024-6-11)-(2024-6-17)
 </p/>fixed numbers being entered input bug in save()
