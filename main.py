@@ -6,8 +6,9 @@
 # Version: 0.4
 #-----------------------------------------------------------------------------
 '''
-   Here is the headers docString 
-   this is where you explain what the program does
+   This is an interactable database that allows a user to input 
+   either services or users. The database can then search 
+   itself to find services that best match a users needs.
 '''
 #-----------------------------------------------------------------------------
 #-Imports and Global Variables------------------------------------------------
@@ -47,7 +48,7 @@ def get_YesNo(msg):
         return False
     else:
         print("Please input either 'yes' or 'no'")
-        get_YesNo(msg)
+        return get_YesNo(msg)
 
 
 def get_choice(valid_inputs, msg, error_msg):
@@ -85,16 +86,24 @@ def create_service():
     '''Gets required info to create a service from the user, then
     creates the service if not already in the system.
     '''
+    taken_names = [service.name.lower() for service in s.master_service_list]
     name = get_input_type(str, 'What is your name? ')
+    while name.lower() in taken_names:
+        name = get_input_type(str, f'It appears that the name {name} is '
+                              + 'taken, please use a different one: ')
     xpos = get_input_type(float, 'Enter your x coordinate: ')
     zpos = get_input_type(float, 'Enter your z coordinate: ')
-    products = get_input_type(str, "Enter what products you provide(product1, product2, etc): ").replace('"', '')
+    products = get_input_type(str, "Enter what products you provide(product1"
+                              + ", product2, etc): ").replace('"', '')
     products = products.replace("'", '')
     products = products.split(', ')
-    phone_number = get_input_type(int, 'Enter your phone_number (no digit separators, such as "-" or "."): ')
+    phone_number = get_input_type(int, 'Enter your phone_number (no digit '
+                                + 'separators, such as "-" or "."): ')
     tags = []
-    if get_YesNo("Is there a general category of items you provide?(yes/no) "):
-        tags = get_input_type(str, "Enter what categories you provide(category1, category2, etc): ").replace('"', '')
+    if get_YesNo("Is there a general category of items you provide?"
+                 + "(yes/no)"):
+        tags = get_input_type(str, "Enter what categories you provide(cate"
+                            + "gory1, category2, etc): ").replace('"', '')
         tags = tags.replace("'", '')
         tags = tags.split(', ')
     # Verification that submitted info is correct.
@@ -107,7 +116,8 @@ def create_service():
         if get_YesNo('do you still want to create a service?'):
             create_service()
         return None
-    globals()[name] = s.Service(name, xpos, zpos, products, phone_number, tags)
+    globals()[name] = s.Service(name, xpos, zpos, products, phone_number, 
+                                tags)
     # Remove newly created object if it's already in master_list.
     for service in s.master_service_list[:-1]:
         if globals()[name].summary == service.summary:
@@ -125,19 +135,28 @@ def create_user():
     '''Gets required info to create a user from the user, then
     creates the user if not already in the system.
     '''
+    taken_names = [user.name.lower() for user in u.master_user_list]
     name = get_input_type(str, 'What is your name? ')
+    while name.lower() in taken_names:
+        name = get_input_type(str, f'It appears that the name {name} is '
+                              + 'taken, please use a different one: ')
     xpos = get_input_type(float, 'Enter your x coordinate: ')
     zpos = get_input_type(float, 'Enter your z coordinate: ')
-    needs = get_input_type(str, "Enter what products you're looking for: ").replace('"', '')
+    needs = get_input_type(str, "Enter what products you're looking "
+                           + "for: ").replace('"', '')
     needs = needs.replace("'", '')
     needs = needs.split(', ')
-    phone_number = get_input_type(int, 'Enter your phone_number (no digit separators, such as "-" or "."): ')
+    phone_number = get_input_type(int, 'Enter your phone_number (no '
+                                  + 'digit separators, such as "-" or "."): ')
     tags = []
-    if get_YesNo("Is there a general category of items you're looking for? (yes/no)"):
+    if get_YesNo("Is there a general category of items you're looking for? "
+                 + "(yes/no)"):
         options = s.existing_tags.copy()
         options.append('Exit Menu')
         while True:
-            new_tag = offer_options(options, "Choose a tag from the options or choose cancel after you've selected all relevant tags. ", 'error')
+            new_tag = offer_options(options, "Choose a tag from the options "
+                                    + "or choose cancel after you've "
+                                    + "selected all relevant tags. ", 'error')
             if new_tag == 'Exit Menu':
                 break
             else:
@@ -177,9 +196,6 @@ def change_current_user(name):
             return None
     print("That user doesn't seem to exist.")
 #-Main -----------------------------------------------------------------------
-#print(u.master_user_list)
-#print(s.master_service_list)
-print(s.existing_tags)
 while True:
     user_options = ['Change current user', 'Get relevant services',
                     'Create a user', 'Create a service']

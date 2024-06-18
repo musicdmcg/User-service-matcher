@@ -1,5 +1,11 @@
 Changelog
 v0.4----(2024-6-11)-(2024-6-17)
+</p/>corrected all line length issues
+</p/>fixed save issue with '&' symbol
+</p/>fixed duplicate user/service creation overwriting
+</p/>fixed get_YesNo() return none on a misinput
+</p/>fixed change_user() to account for case sensitivity
+</p/>added case sensitivity to user.name
 </p/>fixed tag matching to work
 </p/>fixed input related errors when spaces, ', or " used
 </p/>added verification in create_service() and create_user()

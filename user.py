@@ -28,6 +28,7 @@ class User(s.Service):
         var_name = self.name.replace("'", '')
         var_name = var_name.replace('"', '')
         var_name = var_name.replace(' ', '_')
+        var_name = var_name.replace('&', 'and')
         with open('user_objects.py', 'a') as f:
             f.write(f'\n{var_name} = '
             + f'u.User("""{self.name}""", {self.xpos}, {self.zpos}, '
@@ -52,15 +53,16 @@ class User(s.Service):
                     tag_matching.append(service)
                     break
         if len(service_matching) == 0 and len(tag_matching) == 0:
-            print('No services matched your request')
+            print('\nNo services matched your request')
             return None
         if len(service_matching) == 0:
-            print('No services matched your needs')
+            print('\nNo services matched your needs')
         else:
             print('\nMatched Needs')
             service_matching.sort(key = self.distance_from_user)
             for service in service_matching:
-                service.summary.append([f'Distance from current location: {self.distance_from_user(service)}'])
+                service.summary.append(['Distance from current location: '
+                                    + f'{self.distance_from_user(service)}'])
                 print(tabulate(service.summary))
         if len(tag_matching) == 0:
             print('No services matched your tags')
@@ -68,6 +70,7 @@ class User(s.Service):
             print('Matched tags')
             tag_matching.sort(key = self.distance_from_user)
             for service in tag_matching:
-                service.summary.append([f'Distance from current location: {self.distance_from_user(service)}'])
+                service.summary.append(['Distance from current location: '
+                                    + f'{self.distance_from_user(service)}'])
                 print(tabulate(service.summary))
             return None
