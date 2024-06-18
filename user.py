@@ -37,7 +37,7 @@ class User(s.Service):
             + f'{self.services}, {self.phone_number}, {self.tags})')
 
     def distance_from_user(self, service):
-        '''Returns distance between user (self) and service. '''
+        '''Returns distance between self and service. '''
         distance = m.sqrt((self.zpos - service.zpos)**2 
                         + (self.xpos - service.xpos)**2)
         return round(distance, 6)
@@ -47,6 +47,7 @@ class User(s.Service):
         needs or tags, then prints them'''
         service_matching = []
         tag_matching = []
+        # Finding matches
         for service in s.master_service_list:
             for product in service.services:
                 if product in self.services:
@@ -57,6 +58,7 @@ class User(s.Service):
                 if tag in self.tags and service not in service_matching:
                     tag_matching.append(service)
                     break
+        # Printing results
         if len(service_matching) == 0 and len(tag_matching) == 0:
             print('\nNo services matched your request')
             return None

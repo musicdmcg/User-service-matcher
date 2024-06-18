@@ -1,4 +1,4 @@
-# Internal file used to store data across sessions. Do not 
+# Internal file used to store data across sessions. DO NOT
 # modify directly.
 import services as s
 Costco = s.Service("""Costco""", 7.0, -8.0, ['groceries', 'gas', 'TVs', 'phones', 'computers'], 2045967788, ['bulk', 'tech'])

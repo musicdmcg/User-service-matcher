@@ -3,7 +3,7 @@
 # Name: Drew McGregor
 # Class: CS30
 # Assignment: Capstone Coding Project
-# Version: 0.4
+# Version: 1
 #-----------------------------------------------------------------------------
 '''
    This is an interactable database that allows a user to input 
@@ -86,6 +86,7 @@ def create_service():
     '''Gets required info to create a service from the user, then
     creates the service if not already in the system.
     '''
+    # Getting info.
     taken_names = [service.name.lower() for service in s.master_service_list]
     name = get_input_type(str, 'What is your name? ')
     while name.lower() in taken_names:
@@ -135,6 +136,7 @@ def create_user():
     '''Gets required info to create a user from the user, then
     creates the user if not already in the system.
     '''
+    # Getting info.
     taken_names = [user.name.lower() for user in u.master_user_list]
     name = get_input_type(str, 'What is your name? ')
     while name.lower() in taken_names:
@@ -146,17 +148,18 @@ def create_user():
                            + "for: ").replace('"', '')
     needs = needs.replace("'", '')
     needs = needs.split(', ')
-    phone_number = get_input_type(int, 'Enter your phone_number (no '
-                                  + 'digit separators, such as "-" or "."): ')
+    phone_number = get_input_type(int, 'Enter your phone_number (no digit'
+                                  + ' separators, such as "-" or "."): ')
     tags = []
     if get_YesNo("Is there a general category of items you're looking for? "
                  + "(yes/no)"):
         options = s.existing_tags.copy()
         options.append('Exit Menu')
         while True:
-            new_tag = offer_options(options, "Choose a tag from the options "
-                                    + "or choose cancel after you've "
-                                    + "selected all relevant tags. ", 'error')
+            new_tag = offer_options(options, "Choose a tag from the options."
+                                    + " Choose cancel after you've selected"
+                                    + " all relevant tags. ", 
+                                    'Not an option, please try again')
             if new_tag == 'Exit Menu':
                 break
             else:
@@ -196,6 +199,7 @@ def change_current_user(name):
             return None
     print("That user doesn't seem to exist.")
 #-Main -----------------------------------------------------------------------
+print(start_msg)
 while True:
     user_options = ['Change current user', 'Get relevant services',
                     'Create a user', 'Create a service', 'Quit']

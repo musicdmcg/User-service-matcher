@@ -1,4 +1,4 @@
-# Internal file used to store data across sessions. Do not 
+# Internal file used to store data across sessions. DO NOT 
 # modify directly.
 import user as u 
 bob = u.User("""bob""", 1.0, 1.0, ['apples'], 5556667777, ['tech'])

@@ -18,7 +18,7 @@ class Service:
         self.tags = tags
         self.summary = [[self.name], 
                     [f'Location : ({self.xpos}, {self.zpos})'], 
-                    ['Services: ' + str(', '.join(map(str, self.services)))], 
+                    ['Services: ' + str(', '.join(map(str, self.services)))],
                     [f'Phone Number: {self.phone_number}'], 
                     ['Tags: ' + str(', '.join(map(str, self.tags)))]]
         master_service_list.append(self)
