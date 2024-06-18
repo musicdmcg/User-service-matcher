@@ -198,7 +198,7 @@ def change_current_user(name):
 #-Main -----------------------------------------------------------------------
 while True:
     user_options = ['Change current user', 'Get relevant services',
-                    'Create a user', 'Create a service']
+                    'Create a user', 'Create a service', 'Quit']
     choice = offer_options(user_options, 
                  'What would you like to do? ', 
                  "That's not an option, please try again.")
@@ -215,4 +215,8 @@ while True:
         create_user()
     elif choice == user_options[3]:
         create_service()
-
+    elif choice == user_options[4]:
+        if get_YesNo('Are you sure you want to quit?'):
+            break
+        else:
+            pass
